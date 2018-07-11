@@ -2,27 +2,27 @@
 dataURL <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 
 #downloads the data to the current working directory
-#download.file(dataURL, "./data.zip")
+download.file(dataURL, "./data.zip")
 
 #unzips the file to the current directory
-#unzip("./data.zip")
+unzip("./data.zip")
 
 #starts the dplyr package to work with the data more easily
 library(dplyr)
 
 #loads the test data into three data frames
-#test_activity <- read.table("./UCI Har Dataset/test/y_test.txt")
-#test_subject <- read.table("./UCI Har Dataset/test/subject_test.txt")
-#test_meas <- read.table("./UCI Har Dataset/test/X_test.txt")
+test_activity <- read.table("./UCI Har Dataset/test/y_test.txt")
+test_subject <- read.table("./UCI Har Dataset/test/subject_test.txt")
+test_meas <- read.table("./UCI Har Dataset/test/X_test.txt")
 
 #loads the train data into three data frames
-#train_activity <- read.table("./UCI Har Dataset/train/y_train.txt")
-#train_subject <- read.table("./UCI Har Dataset/train/subject_train.txt")
-#train_meas <- read.table("./UCI Har Dataset/train/X_train.txt")
+train_activity <- read.table("./UCI Har Dataset/train/y_train.txt")
+train_subject <- read.table("./UCI Har Dataset/train/subject_train.txt")
+train_meas <- read.table("./UCI Har Dataset/train/X_train.txt")
 
 #combines the test data and the train data into one table each
-#test_data <- cbind(test_subject, test_activity, test_meas)
-#train_data <- cbind(train_subject, train_activity, train_meas)
+test_data <- cbind(test_subject, test_activity, test_meas)
+train_data <- cbind(train_subject, train_activity, train_meas)
 
 #merges the data sets into one data table using rbind
 full_data <- rbind(test_data, train_data)
@@ -54,6 +54,7 @@ measurement_names <- sub("t", "time.", measurement_names)
 measurement_names <- sub("f", "frequency.", measurement_names)
 measurement_names <- gsub("-", ".", measurement_names)
 measurement_names <- gsub("\\()", "", measurement_names)
+#this next line is necessary because of the way I coded the first "sub" where the first instance of t is replaced
 measurement_names <- sub("stime.d", "std", measurement_names)
 
 #makes vector of all column names
